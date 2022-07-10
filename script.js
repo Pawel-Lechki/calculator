@@ -58,15 +58,17 @@ class Calculator {
     const intigerDigi = parseFloat(stringNumber.split(".")[0]);
     const decimalDigi = stringNumber.split(".")[1];
     let intiDisplay;
-    if(isNaN(intigerDigi)){
-        intigerDigi = '';
+    if (isNaN(intigerDigi)) {
+      intiDisplay = "";
     } else {
-        intiDisplay = intigerDigi.toLocaleString('en' { maximumFractionDigits: 0})
+      intiDisplay = intigerDigi.toLocaleString("en", {
+        maximumFractionDigits: 0,
+      });
     }
-    if(decimalDigi != null) {
-        return `${intiDisplay}.${decimalDigi}`;
+    if (decimalDigi != null) {
+      return `${intiDisplay}.${decimalDigi}`;
     } else {
-        return intiDisplay;
+      return intiDisplay;
     }
   }
 
