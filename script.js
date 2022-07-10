@@ -16,7 +16,7 @@ class Calculator {
     this.currOperand = this.currOperand.toString() + number.toString();
   }
   chooseOper(operation) {
-    if (currOperand === "") return;
+    if (this.currOperand === "") return;
     if (this.prevOperand !== "") {
       this.compute();
     }
@@ -46,6 +46,9 @@ class Calculator {
       default:
         return;
     }
+    this.currOperand = computation;
+    this.operation = undefined;
+    this.prevOperand = "";
   }
 
   updateDisplay() {
