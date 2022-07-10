@@ -53,10 +53,31 @@ class Calculator {
     this.prevOperand = "";
   }
 
+  getDisplayNumber(number) {
+    const stringNumber = number.toString();
+    const intigerDigi = parseFloat(stringNumber.split(".")[0]);
+    const decimalDigi = stringNumber.split(".")[1];
+    let intiDisplay;
+    if(isNaN(intigerDigi)){
+        intigerDigi = '';
+    } else {
+        intiDisplay = intigerDigi.toLocaleString('en' { maximumFractionDigits: 0})
+    }
+    if(decimalDigi != null) {
+        return `${intiDisplay}.${decimalDigi}`;
+    } else {
+        return intiDisplay;
+    }
+  }
+
   updateDisplay() {
-    this.currOperandTextElem.innerText = this.currOperand;
+    this.currOperandTextElem.innerText = this.getDisplayNumber(
+      this.currOperand
+    );
     if (this.operation != null) {
-      this.prevOperandTextElem.innerText = `${this.prevOperand} ${this.operation}`;
+      this.prevOperandTextElem.innerText = `${this.getDisplayNumber(
+        this.prevOperand
+      )} ${this.operation}`;
     }
   }
 }
