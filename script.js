@@ -12,14 +12,45 @@ class Calculator {
 
   delete() {}
   appendNum(number) {
-    this.currOperand = number;
+    if (number === "." && this.currOperand.includes(".")) return;
+    this.currOperand = this.currOperand.toString() + number.toString();
   }
-  chooseOper(operation) {}
+  chooseOper(operation) {
+    if (currOperand === "") return;
+    if (this.prevOperand !== "") {
+      this.compute();
+    }
+    this.operation = operation;
+    this.prevOperand = this.currOperand;
+    this.currOperand = "";
+  }
 
-  compute() {}
+  compute() {
+    let computation;
+    const prev = parseFloat(this.prevOperand);
+    const curr = parseFloat(this.currOperand);
+    if (isNaN(prev) || isNaN(curr)) return;
+    switch (this.operation) {
+      case "+":
+        computation = prev + curr;
+        break;
+      case "-":
+        computation = prev - curr;
+        break;
+      case "*":
+        computation = prev * curr;
+        break;
+      case "÷":
+        computation = prev / curr;
+        break;
+      default:
+        return;
+    }
+  }
 
   updateDisplay() {
     this.currOperandTextElem.innerText = this.currOperand;
+    this.prevOperandTextElem.innerText = this.prevOperand;
   }
 }
 
@@ -31,11 +62,23 @@ const prevOperandTextElem = document.querySelector("[data-pev]");
 const currOperandTextElem = document.querySelector("[data-curr]");
 const clearButton = document.querySelector("[data-clear]");
 
-const claculator = new Calculator(prevOperandTextElem, currOperandTextElem);
+const calculator = new Calculator(prevOperandTextElem, currOperandTextElem);
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    claculator.appendNum(button.innerHTML);
-    claculator.updateDisplay();
+    calculator.appendNum(button.innerText);
+    calculator.updateDisplay();
   });
+});
+
+operationButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    calculator.chooseOper(button.innerText);
+    calculator.updateDisplay();
+  });
+});
+
+equalsButton.addEventListener("click", (button) => {
+  calculator.compute();
+  calculator.updateDisplay();
 });
